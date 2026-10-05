@@ -3318,6 +3318,50 @@ PLTZ_MODE_HEADER ;
 ), output
   end
 
+  def test_palletizing_mode_header_j4turn_plus_pi
+    parse("PLTZ_MODE_HEADER = {
+      PLTZ_MODE_ENABLE : true,
+      J4TURN           : +PI,
+      ORIENT           : DOWNWARDS
+    }")
+
+    assert_prog ""
+
+    output = "/APPL\n"
+    @interpreter.header_appl_data.each do |n|
+      output += n.write(@interpreter)
+    end
+
+    assert_equal %(/APPL
+PLTZ_MODE_HEADER ;
+  PLTZ_MODE_ENABLE : TRUE ;
+  J4TURN : +PI ;
+  ORIENT : DOWNWARDS ;
+), output
+  end
+
+  def test_palletizing_mode_header_j4turn_minus_pi
+    parse("PLTZ_MODE_HEADER = {
+      PLTZ_MODE_ENABLE : true,
+      J4TURN           : -PI,
+      ORIENT           : DOWNWARDS
+    }")
+
+    assert_prog ""
+
+    output = "/APPL\n"
+    @interpreter.header_appl_data.each do |n|
+      output += n.write(@interpreter)
+    end
+
+    assert_equal %(/APPL
+PLTZ_MODE_HEADER ;
+  PLTZ_MODE_ENABLE : TRUE ;
+  J4TURN : -PI ;
+  ORIENT : DOWNWARDS ;
+), output
+  end
+
   def test_function_with_return
     $global_options[:function_print] = true
     $stacks = TPPlus::Stacks.new

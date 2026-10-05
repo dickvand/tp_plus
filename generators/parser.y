@@ -891,6 +891,8 @@ warning
     | optional_sign DIGIT              { val[1] = val[1].to_i * -1 if val[0] == "-"; result = val[1] }
     | optional_sign REAL               { val[1] = val[1].to_f * -1 if val[0] == "-"; result = val[1] }
     | TRUE_FALSE                       { result = val[0] == "true" }
+    | PLUS WORD                        { result = "+#{val[1]}" }
+    | MINUS WORD                       { result = "-#{val[1]}" }
     ;
 
   optional_sign
